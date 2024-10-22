@@ -11,9 +11,14 @@ const URI =process.env.MONGODB_URI;
 
 const PORT = process.env.PORT || 5000;
 
+console.log('Starting server...');
+
 
 mongoose.connect(URI)
-  .then(() => console.log('Connected to MongoDB'))
+  .then(() => {
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  })
   .catch(err => console.log(err));
 
 
@@ -32,18 +37,18 @@ const contactSchema = new mongoose.Schema({
         await newContact.save();
         res.status(201).send('Message recieved');
     }catch(error){
+        console.error('Error saving message:', error);
         res.status(400).send("Error saving message");
     }
   });
 
   app.get('/',async(req,res)=>{
-    try{
+    try{ 
       res.status(200).send("Server running");
     }catch(error){
+      console.error('Error in root route:', error);
       res.status(500).send("Error :",error);
     }
   });
 
 
-
-app.listen(PORT, ()=>console.log(`Server running on port ${PORT}`))
