@@ -36,6 +36,14 @@ const contactSchema = new mongoose.Schema({
     }
   });
 
+  app.get('/',async(req,res)=>{
+    try{
+      res.status(200).send("Server running");
+    }catch(error){
+      res.status(500).send("Error :",error);
+    }
+  });
+
 
 
 app.listen(PORT, ()=>console.log(`Server running on port ${PORT}`))
